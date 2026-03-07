@@ -240,6 +240,21 @@ def license_name(item: dict) -> str | None:
     return None
 
 
+def repo_html_url(item: dict) -> str:
+    html_url = str(item.get("html_url") or "").strip()
+    if html_url:
+        return html_url
+
+    url = str(item.get("url") or "").strip()
+    api_prefix = "https://api.github.com/repos/"
+    web_prefix = "https://github.com/repos/"
+    if url.startswith(api_prefix):
+        return f"https://github.com/{url.removeprefix(api_prefix)}"
+    if url.startswith(web_prefix):
+        return f"https://github.com/{url.removeprefix(web_prefix)}"
+    return url
+
+
 def normalize_repo(item: dict) -> dict:
     fetched_at = item.get("fetched_at") or isoformat_utc(utc_now())
     updated_at = item.get("updated_at")
@@ -252,7 +267,7 @@ def normalize_repo(item: dict) -> dict:
         "forks": int(item.get("forks", item.get("forks_count", 0)) or 0),
         "watchers": int(item.get("watchers", item.get("watchers_count", 0)) or 0),
         "open_issues": int(item.get("open_issues", item.get("open_issues_count", 0)) or 0),
-        "url": item.get("url") or item.get("html_url") or "",
+        "url": repo_html_url(item),
         "homepage": (item.get("homepage") or "").strip(),
         "license": license_name(item),
         "topics": normalize_topics(item.get("topics")),
