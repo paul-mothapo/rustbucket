@@ -22,7 +22,6 @@ from dataclasses import dataclass
 
 import requests
 
-GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 PER_PAGE = 100
 DAILY_GOAL = 500
 DEFAULT_MAX_INACTIVE_MONTHS = 18
@@ -52,8 +51,6 @@ HEADERS = {
     "Accept": "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
 }
-if GITHUB_TOKEN:
-    HEADERS["Authorization"] = f"Bearer {GITHUB_TOKEN}"
 
 
 @dataclass(slots=True)
@@ -650,11 +647,6 @@ def run_loop(config: RunConfig, interval_hours: float = 24):
 
 if __name__ == "__main__":
     config = parse_args()
-
-    if not GITHUB_TOKEN and not config.readme_only:
-        print("Warning: GITHUB_TOKEN not set.")
-        print("Locally: export GITHUB_TOKEN=ghp_yourtoken")
-        print("GitHub Actions git auth is handled by the workflow; set GITHUB_TOKEN only if you want authenticated API requests.\n")
 
     if config.mode == "loop":
         run_loop(config, interval_hours=24)
