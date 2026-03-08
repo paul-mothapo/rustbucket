@@ -23,6 +23,8 @@ from dataclasses import dataclass
 import requests
 
 PER_PAGE = 100
+MAX_SEARCH_RESULTS = 1000
+MAX_SEARCH_PAGES = MAX_SEARCH_RESULTS // PER_PAGE
 DAILY_GOAL = 500
 DEFAULT_MAX_INACTIVE_MONTHS = 18
 ACTIVE_WINDOW_DAYS = 180
@@ -203,6 +205,9 @@ def comparable_filters(filters: dict) -> dict:
 
 def search_rust_repos(page: int, config: RunConfig) -> list[dict]:
     """Fetch one page (up to 100) of Rust repos sorted by stars."""
+    if page > MAX_SEARCH_PAGES:
+        return []
+
     url = "https://api.github.com/search/repositories"
     params = {
         "q": build_search_query(config),
@@ -533,10 +538,17 @@ def collect(config: RunConfig) -> dict:
     page = state["page"]
     started_at = isoformat_utc(utc_now())
 
+    if page > MAX_SEARCH_PAGES:
+        print(
+            "Saved pagination reached GitHub's 1,000-result search limit. "
+            "Restarting from page 1."
+        )
+        page = 1
+
     print(f"Rust Bucket - collecting up to {config.goal} repos (starting page {page})")
     print(f"Search query: {build_search_query(config)}")
 
-    while len(new_repos) < config.goal:
+    while len(new_repos) < config.goal and page <= MAX_SEARCH_PAGES:
         print(f"Fetching page {page} ...", end=" ", flush=True)
         items = search_rust_repos(page, config)
 
@@ -563,10 +575,16 @@ def collect(config: RunConfig) -> dict:
         if len(new_repos) >= config.goal:
             break
 
+    if page > MAX_SEARCH_PAGES:
+        print(
+            f"Reached GitHub's search pagination limit ({MAX_SEARCH_PAGES} pages / "
+            f"{MAX_SEARCH_RESULTS} results). The next run will restart from page 1."
+        )
+
     all_repos = sorted(existing_map.values(), key=lambda repo: repo["stars"], reverse=True)
     completed_at = isoformat_utc(utc_now())
     state = normalize_state(state)
-    state["page"] = page
+    state["page"] = 1 if page > MAX_SEARCH_PAGES else page
     state["collected"] = int(state.get("collected", 0)) + len(new_repos)
     state["seen_ids"] = sorted(seen_ids)
     state["last_run"] = {
