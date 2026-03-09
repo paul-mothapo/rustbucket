@@ -76,6 +76,7 @@ def utc_now() -> datetime.datetime:
 def default_state() -> dict:
     return {
         "page": 1,
+        "star_upper_bound": None,
         "collected": 0,
         "seen_ids": [],
         "last_run": {
@@ -93,6 +94,8 @@ def normalize_state(state: dict | None) -> dict:
     if not state:
         return data
     data["page"] = int(state.get("page", 1) or 1)
+    star_upper_bound = state.get("star_upper_bound")
+    data["star_upper_bound"] = int(star_upper_bound) if star_upper_bound not in (None, "") else None
     data["collected"] = int(state.get("collected", 0) or 0)
     data["seen_ids"] = list(state.get("seen_ids", []))
     last_run = state.get("last_run", {}) or {}
@@ -183,12 +186,14 @@ def build_filters(config: RunConfig) -> dict:
     }
 
 
-def build_search_query(config: RunConfig) -> str:
+def build_search_query(config: RunConfig, star_upper_bound: int | None = None) -> str:
     parts = ["language:rust"]
     if config.query.strip():
         parts.append(config.query.strip())
     if config.min_stars > 0:
         parts.append(f"stars:>={config.min_stars}")
+    if star_upper_bound is not None:
+        parts.append(f"stars:<={star_upper_bound}")
     if not config.include_forks:
         parts.append("fork:false")
     if not config.include_archived:
@@ -203,14 +208,14 @@ def comparable_filters(filters: dict) -> dict:
     return {key: value for key, value in filters.items() if key != "cutoff_date"}
 
 
-def search_rust_repos(page: int, config: RunConfig) -> list[dict]:
+def search_rust_repos(page: int, config: RunConfig, star_upper_bound: int | None = None) -> list[dict]:
     """Fetch one page (up to 100) of Rust repos sorted by stars."""
     if page > MAX_SEARCH_PAGES:
         return []
 
     url = "https://api.github.com/search/repositories"
     params = {
-        "q": build_search_query(config),
+        "q": build_search_query(config, star_upper_bound),
         "sort": "stars",
         "order": "desc",
         "per_page": PER_PAGE,
@@ -223,7 +228,7 @@ def search_rust_repos(page: int, config: RunConfig) -> list[dict]:
         wait = max(reset - int(time.time()), 5)
         print(f"  Rate limited. Sleeping {wait}s ...")
         time.sleep(wait)
-        return search_rust_repos(page, config)
+        return search_rust_repos(page, config, star_upper_bound)
 
     resp.raise_for_status()
     return resp.json().get("items", [])
@@ -536,36 +541,61 @@ def collect(config: RunConfig) -> dict:
     seen_ids = set(state["seen_ids"])
     new_repos: list[dict] = []
     page = state["page"]
+    star_upper_bound = state.get("star_upper_bound")
     started_at = isoformat_utc(utc_now())
+    current_band_lowest_star: int | None = None
 
     if page > MAX_SEARCH_PAGES:
-        print(
-            "Saved pagination reached GitHub's 1,000-result search limit. "
-            "Restarting from page 1."
-        )
+        print("Saved pagination exceeded the current search window. Restarting at page 1.")
         page = 1
 
     print(f"Rust Bucket - collecting up to {config.goal} repos (starting page {page})")
-    print(f"Search query: {build_search_query(config)}")
+    print(f"Search query: {build_search_query(config, star_upper_bound)}")
 
-    while len(new_repos) < config.goal and page <= MAX_SEARCH_PAGES:
+    while len(new_repos) < config.goal:
+        if page > MAX_SEARCH_PAGES:
+            if current_band_lowest_star is None:
+                print("Reached the end of the current search window with no narrower star band available.")
+                break
+
+            next_star_upper_bound = current_band_lowest_star - 1
+            if next_star_upper_bound < config.min_stars:
+                print("Reached the configured minimum star threshold.")
+                break
+
+            star_upper_bound = next_star_upper_bound
+            page = 1
+            current_band_lowest_star = None
+            print(
+                f"Reached GitHub's search pagination limit ({MAX_SEARCH_PAGES} pages / "
+                f"{MAX_SEARCH_RESULTS} results). Continuing with search query: "
+                f"{build_search_query(config, star_upper_bound)}"
+            )
+
         print(f"Fetching page {page} ...", end=" ", flush=True)
-        items = search_rust_repos(page, config)
+        items = search_rust_repos(page, config, star_upper_bound)
 
         if not items:
             print("no more results.")
             break
 
         added = 0
+        page_lowest_star: int | None = None
         for item in items:
             repo = parse_repo(item)
             if not repo_matches_filters(repo, config):
                 continue
+            if page_lowest_star is None or repo["stars"] < page_lowest_star:
+                page_lowest_star = repo["stars"]
             if repo["id"] not in seen_ids:
                 new_repos.append(repo)
                 added += 1
             existing_map[repo["id"]] = repo
             seen_ids.add(repo["id"])
+
+        if page_lowest_star is not None:
+            if current_band_lowest_star is None or page_lowest_star < current_band_lowest_star:
+                current_band_lowest_star = page_lowest_star
 
         print(f"+{added} new  (total new today: {len(new_repos)})")
         page += 1
@@ -575,16 +605,17 @@ def collect(config: RunConfig) -> dict:
         if len(new_repos) >= config.goal:
             break
 
-    if page > MAX_SEARCH_PAGES:
-        print(
-            f"Reached GitHub's search pagination limit ({MAX_SEARCH_PAGES} pages / "
-            f"{MAX_SEARCH_RESULTS} results). The next run will restart from page 1."
-        )
+    if page > MAX_SEARCH_PAGES and current_band_lowest_star is not None:
+        next_star_upper_bound = current_band_lowest_star - 1
+        if next_star_upper_bound >= config.min_stars:
+            star_upper_bound = next_star_upper_bound
+        page = 1
 
     all_repos = sorted(existing_map.values(), key=lambda repo: repo["stars"], reverse=True)
     completed_at = isoformat_utc(utc_now())
     state = normalize_state(state)
-    state["page"] = 1 if page > MAX_SEARCH_PAGES else page
+    state["page"] = page
+    state["star_upper_bound"] = star_upper_bound
     state["collected"] = int(state.get("collected", 0)) + len(new_repos)
     state["seen_ids"] = sorted(seen_ids)
     state["last_run"] = {
