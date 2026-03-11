@@ -1,9 +1,9 @@
 # Rust Bucket
 
-![Last Updated](https://img.shields.io/badge/Updated%20on-2026-03-09%2007%3A20%20UTC-brightgreen)
-![Total Projects](https://img.shields.io/badge/Projects%20Indexed-1,600-blue)
+![Last Updated](https://img.shields.io/badge/Updated%20on-2026-03-11%2013%3A04%20UTC-brightgreen)
+![Total Projects](https://img.shields.io/badge/Projects%20Indexed-2,100-blue)
 
-## Updated on 2026-03-09 07:20 UTC
+## Updated on 2026-03-11 13:04 UTC
 
 > Automated collection of open-source Rust projects from GitHub.
 > Built as a filtered discovery index for active Rust repositories.
@@ -12,13 +12,13 @@
 
 | Metric | Value |
 | --- | --- |
-| Total projects indexed | 1,600 |
-| New repos added this run | 599 |
-| Median stars | 2,223 |
-| Active in last 180 days | 1,438 |
-| Repos with a detected license | 1,553 |
-| Top licenses | Apache-2.0 (609), MIT (509), NOASSERTION (151), GPL-3.0 (103), Unknown (47) |
-| Top topics | rust (884), cli (111), hacktoberfest (108), linux (74), terminal (73), rust-lang (72), wasm (58), tui (57) |
+| Total projects indexed | 2,100 |
+| New repos added this run | 500 |
+| Median stars | 1,687 |
+| Active in last 180 days | 1,856 |
+| Repos with a detected license | 2,023 |
+| Top licenses | Apache-2.0 (774), MIT (675), NOASSERTION (196), GPL-3.0 (148), Unknown (77) |
+| Top topics | rust (1116), hacktoberfest (134), cli (130), linux (97), rust-lang (87), terminal (84), tui (73), wasm (66) |
 
 ## Filters
 
@@ -28,48 +28,48 @@
 | Minimum stars | 0 |
 | Forks included | no |
 | Archived repos included | no |
-| Inactive cutoff | 2024-09-15 |
-| Last saved page | 7 |
+| Inactive cutoff | 2024-09-17 |
+| Last saved page | 2 |
 
 ## New Repos Added This Run
 
 | Project | Stars | Updated | Topics | Description |
 | --- | --- | --- | --- | --- |
-| [tere](https://github.com/mgunyho/tere) | 1,792 | 2026-01-16 | file-explorer, rust, terminal | Terminal file explorer |
-| [mockall](https://github.com/asomers/mockall) | 1,791 | 2026-03-08 | - | A powerful mock object library for Rust |
-| [ja4](https://github.com/FoxIO-LLC/ja4) | 1,791 | 2026-02-17 | cybersecurity, ja3, ja3-fingerprint | JA4+ is a suite of network fingerprinting standards |
-| [stateright](https://github.com/stateright/stateright) | 1,786 | 2025-07-27 | actor-model, distributed-systems, model-checker | A model checker for implementing distributed systems. |
-| [AppFlowy-Cloud](https://github.com/AppFlowy-IO/AppFlowy-Cloud) | 1,786 | 2026-03-04 | - | Bring projects, wikis, and teams together with AI. AppFlowy is the AI collaborative wor... |
-| [ocrs](https://github.com/robertknight/ocrs) | 1,783 | 2026-03-05 | computer-vision, machine-learning, ocr | Rust library and CLI tool for OCR (extracting text from images) |
-| [rust-bio](https://github.com/rust-bio/rust-bio) | 1,776 | 2026-02-23 | - | This library provides implementations of many algorithms and data structures that are u... |
-| [esp-hal](https://github.com/esp-rs/esp-hal) | 1,776 | 2026-03-06 | embedded, embedded-hal, esp32 | no_std Hardware Abstraction Layers for ESP32 microcontrollers |
-| [cargo-fuzz](https://github.com/rust-fuzz/cargo-fuzz) | 1,769 | 2026-02-10 | cargo, fuzz-testing, fuzzing | Command line helpers for fuzzing |
-| [BoilR](https://github.com/PhilipK/BoilR) | 1,768 | 2026-02-05 | games, launcher, linux | Synchronize games from other platforms into your Steam library |
-| [diamond-types](https://github.com/josephg/diamond-types) | 1,767 | 2025-09-30 | collaborative-editing, crdt | The world's fastest CRDT. WIP. |
-| [bingrep](https://github.com/m4b/bingrep) | 1,767 | 2026-01-05 | binary, elf, grep | like ~~grep~~ UBER, but for binaries |
-| [social-media-hacker-list](https://github.com/MobileFirstLLC/social-media-hacker-list) | 1,765 | 2026-03-04 | facebook, instagram, linkedin | Growing list of apps and tools for enhancing social media experiences. |
-| [zee](https://github.com/zee-editor/zee) | 1,760 | 2025-02-06 | async, cross-platform, emacs | A modern text editor for the terminal written in Rust |
-| [serie](https://github.com/lusingander/serie) | 1,760 | 2026-03-07 | cli, git, git-client | A rich git commit graph in your terminal, like magic 📚 |
+| [hyperion](https://github.com/hyperion-mc/hyperion) | 1,028 | 2025-10-18 | ecs, flecs, game-server | Minecraft game engine for massive custom events |
+| [confy](https://github.com/rust-cli/confy) | 1,028 | 2026-03-01 | cli, configuration | 🛋 Zero-boilerplate configuration management in Rust |
+| [customasm](https://github.com/hlorenzi/customasm) | 1,027 | 2026-01-04 | asm, assembler, assembly | 💻 An assembler for custom, user-defined instruction sets! https://hlorenzi.github.io/cu... |
+| [safer_ffi](https://github.com/getditto/safer_ffi) | 1,027 | 2026-01-16 | - | Write safer FFI code in Rust without polluting it with unsafe code |
+| [fas-rs](https://github.com/shadow3aaa/fas-rs) | 1,026 | 2026-02-20 | - | Frame aware scheduling for android. |
+| [DTV](https://github.com/chen-zeong/DTV) | 1,026 | 2026-02-11 | bilibili, bilibili-live, douyin | 抖音、b站、斗鱼、虎牙跨平台轻量化桌面客户端 |
+| [ch57x-keyboard-tool](https://github.com/kriomant/ch57x-keyboard-tool) | 1,025 | 2026-01-08 | - | Utility for programming small ch57x keyboards (1189:8890, 1189:8840, 1189:8842) |
+| [onetun](https://github.com/aramperes/onetun) | 1,025 | 2025-10-20 | boringtun, smoltcp, wireguard | User space WireGuard port-forward in Rust |
+| [VirtualDesktopAccessor](https://github.com/Ciantic/VirtualDesktopAccessor) | 1,025 | 2025-11-16 | - | DLL for accessing Windows 11/10 Virtual Desktop features from e.g. AutoHotkey |
+| [FreeMDU](https://github.com/medusalix/FreeMDU) | 1,024 | 2026-03-06 | - | Open hardware and software tools for communicating with Miele appliances via their opti... |
+| [localgpt](https://github.com/localgpt-app/localgpt) | 1,022 | 2026-03-11 | agent, ai, bevy | Local AI assistant, dreaming explorable worlds. |
+| [moq](https://github.com/moq-dev/moq) | 1,021 | 2026-03-11 | - | Media over QUIC library in Rust+Typescript |
+| [ntpd-rs](https://github.com/pendulum-project/ntpd-rs) | 1,018 | 2026-03-11 | clock, ntp, ntp-client | A full-featured implementation of the Network Time Protocol, including NTS support. |
+| [cv](https://github.com/rust-cv/cv) | 1,018 | 2025-07-22 | algorithms, computer-vision, crates | Rust CV mono-repo. Contains pure-Rust dependencies which attempt to encapsulate the cap... |
+| [game-save-manager](https://github.com/mcthesw/game-save-manager) | 1,017 | 2026-03-11 | element-plus, game, rust | 一个简单的游戏存档管理器 |
 
 ## Most Recently Updated Repos
 
 | Project | Stars | Updated | License | Description |
 | --- | --- | --- | --- | --- |
-| [sail](https://github.com/lakehq/sail) | 1,182 | 2026-03-09 | Apache-2.0 | LakeSail's computation framework with a mission to unify batch processing, stream proce... |
-| [ic](https://github.com/dfinity/ic) | 1,736 | 2026-03-09 | NOASSERTION | Internet Computer blockchain source: the client/replica software run by nodes |
-| [gtk4-rs](https://github.com/gtk-rs/gtk4-rs) | 2,259 | 2026-03-09 | MIT | Rust bindings of GTK 4 |
-| [josh](https://github.com/josh-project/josh) | 1,700 | 2026-03-09 | MIT | Just One Single History |
-| [crates.io](https://github.com/rust-lang/crates.io) | 3,513 | 2026-03-09 | Apache-2.0 | The Rust package registry |
-| [ironclaw](https://github.com/nearai/ironclaw) | 8,069 | 2026-03-09 | Apache-2.0 | IronClaw is OpenClaw inspired implementation in Rust focused on privacy and security |
-| [openraft](https://github.com/databendlabs/openraft) | 1,836 | 2026-03-09 | Apache-2.0 | rust raft with improvements |
-| [utoo](https://github.com/utooland/utoo) | 2,309 | 2026-03-09 | MIT | A unified toolchain for web development |
-| [codex](https://github.com/openai/codex) | 64,006 | 2026-03-09 | Apache-2.0 | Lightweight coding agent that runs in your terminal |
-| [rust-gpu](https://github.com/Rust-GPU/rust-gpu) | 2,935 | 2026-03-09 | Apache-2.0 | 🐉 Making Rust a first-class language and ecosystem for GPU shaders 🚧 |
-| [lakekeeper](https://github.com/lakekeeper/lakekeeper) | 1,213 | 2026-03-09 | Apache-2.0 | Lakekeeper is an Apache-Licensed, secure, fast and easy to use Apache Iceberg REST Cata... |
-| [oxc](https://github.com/oxc-project/oxc) | 19,763 | 2026-03-09 | MIT | ⚓ A collection of high-performance JavaScript tools. |
-| [rspack](https://github.com/web-infra-dev/rspack) | 12,544 | 2026-03-09 | MIT | Rust-based bundler for JavaScript and TypeScript with refined webpack API 🦀 |
-| [hyperswitch](https://github.com/juspay/hyperswitch) | 41,052 | 2026-03-09 | Apache-2.0 | An open source payments switch written in Rust to make payments fast, reliable and affo... |
-| [iroh](https://github.com/n0-computer/iroh) | 7,928 | 2026-03-09 | Apache-2.0 | IP addresses break, dial keys instead. Modular networking stack in Rust. |
+| [ariel-os](https://github.com/ariel-os/ariel-os) | 956 | 2026-03-11 | Apache-2.0 | Ariel OS is a library operating system for secure, memory-safe, low-power Internet of T... |
+| [duckdb-rs](https://github.com/duckdb/duckdb-rs) | 871 | 2026-03-11 | MIT | Ergonomic bindings to duckdb for Rust |
+| [relibc](https://github.com/redox-os/relibc) | 972 | 2026-03-11 | MIT | Mirror of https://gitlab.redox-os.org/redox-os/relibc |
+| [kernel](https://github.com/redox-os/kernel) | 837 | 2026-03-11 | MIT | Mirror of https://gitlab.redox-os.org/redox-os/kernel |
+| [router](https://github.com/apollographql/router) | 952 | 2026-03-11 | NOASSERTION | A configurable, high-performance routing runtime for Apollo Federation 🚀 |
+| [golem](https://github.com/golemcloud/golem) | 970 | 2026-03-11 | NOASSERTION | Golem Cloud is the agent-native platform for building AI agents and distributed applica... |
+| [Shiba](https://github.com/rhysd/Shiba) | 791 | 2026-03-11 | MIT | Simple, performant, and keyboard-centric markdown live preview app |
+| [nobodywho](https://github.com/nobodywho-ooo/nobodywho) | 738 | 2026-03-11 | EUPL-1.2 | NobodyWho is an inference engine that lets you run LLMs locally and efficiently on any... |
+| [hwatch](https://github.com/blacknon/hwatch) | 996 | 2026-03-11 | MIT | A modern alternative to the watch command, records the differences in execution results... |
+| [zuban](https://github.com/zubanls/zuban) | 817 | 2026-03-11 | NOASSERTION | Python Type Checker / Language Server |
+| [tapo](https://github.com/mihai-dinculescu/tapo) | 724 | 2026-03-11 | MIT | Unofficial Tapo API Client. Works with TP-Link Tapo smart devices. Tested with light bu... |
+| [ntpd-rs](https://github.com/pendulum-project/ntpd-rs) | 1,018 | 2026-03-11 | NOASSERTION | A full-featured implementation of the Network Time Protocol, including NTS support. |
+| [ethrex](https://github.com/lambdaclass/ethrex) | 853 | 2026-03-11 | Apache-2.0 | Minimalist, stable, modular, fast, and ZK native implementation of the Ethereum protoco... |
+| [chirpstack](https://github.com/chirpstack/chirpstack) | 965 | 2026-03-11 | MIT | ChirpStack open-source LoRaWAN Network Server |
+| [firm](https://github.com/42futures/firm) | 806 | 2026-03-11 | AGPL-3.0 | A text-based work management system for technologists. |
 
 ## Topic and Category Highlights
 
